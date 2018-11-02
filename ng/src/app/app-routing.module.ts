@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginBarComponent } from './login-bar/login-bar.component';
-import { DashboarVendedorComponent} from './dashboar-vendedor/dashboar-vendedor.component'
+import { DashboardVendedorComponent} from './dashboard-vendedor/dashboard-vendedor.component'
 
 const routes:Routes = [
   { 
@@ -15,7 +15,7 @@ const routes:Routes = [
   },
   { 
     path: 'dashboard-ventas', 
-    component: DashboarVendedorComponent
+    component: DashboardVendedorComponent
   },
 ];
 

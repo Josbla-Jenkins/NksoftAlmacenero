@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../modelos/Usuario';
 import { Router } from '@angular/router';
+import { LoginService } from '../services/login.services';
 
 
 
@@ -11,28 +12,40 @@ import { Router } from '@angular/router';
 })
 export class LoginBarComponent implements OnInit {
 
-  usuario : Usuario = {
+  user: Usuario = {
+    id: null,
     email: null,
     password: null
   };
 
   constructor(
-    private router: Router
-    ){}
+    private router: Router,
+    private loginService: LoginService
+  ) { }
 
   ngOnInit() {
   }
 
-  public comprobarUsuario(): void{
-    if(this.usuario.email != null && this.usuario.email != ''){
-      if(this.usuario.password != null && this.usuario.password != ''){
-        if(this.usuario.email == 'jose@mail.com' && this.usuario.password == '123456'){
-          this.router.navigateByUrl('/dashboard-ventas');
-        }else
-          console.log('mal');
-      }else
+  public comprobarUsuario(): void {
+    if (this.user.email != null && this.user.email != '') {
+      if (this.user.password != null && this.user.password != '') {
+        this.loginService.getUser(this.user.email).subscribe(data => {
+          let res: Usuario;
+          if(data != null){
+            res = data;
+            if(this.user.password == data.password){
+              this.user = data;
+              this.router.navigateByUrl('/dashboard-ventas');
+            }
+            else
+              console.log('incorrect password');
+          } else{
+            console.log('not found');
+          }
+        });
+      } else
         console.log('Contraseña vacia');
-    }else
+    } else
       console.log('Usuario vacio');
   }
 }

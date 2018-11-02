@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of, from } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { Producto } from '../modelos/Producto';
 import { MessageService } from './message.service';
@@ -24,7 +24,7 @@ export class ProductService {
     getProducts(): Observable<Producto[]> {
         return this.http.get<Producto[]>(this.productsUrl)
             .pipe(
-                tap(productos => this.log('fetched products')),
+                tap(products => this.log('fetched products')),
                 catchError(this.handleError('getProducts', []))
             );
     }

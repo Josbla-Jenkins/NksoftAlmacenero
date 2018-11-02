@@ -18,7 +18,8 @@ export class InMemoryDataService implements InMemoryDbService{
             {id:1000, email: 'jose@mail.com', password: '123456'},
             {id:1001, email: 'sergio@mail.com', password: '123456'},
             {id:1002, email: 'gabriela@mail.com', password: '123456'},
-        ]
+            {id:1002, email: 'sergio2@mail.com', password: '123456'}
+        ];
 
        return { products, users };
     }
