@@ -1,37 +1,44 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { DashboardVendedorComponent } from './dashboard-vendedor/dashboard-vendedor.component';
-import { AppRoutingModule } from './/app-routing.module';
-import { FormsModule } from '@angular/forms';
-import { LoginBarComponent } from './login-bar/login-bar.component';
-import { TopNavBarComponent } from './common/top-nav-bar/top-nav-bar.component';
-import { ProductListComponent } from './dashboard-vendedor/components/product-list/product-list.component';
-import { HttpClientModule }    from '@angular/common/http';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './services/in-memory-data.service';
+import { HttpModule, Http } from "@angular/http";
+import {
+  SocialLoginModule,
+  AuthServiceConfig,
+  GoogleLoginProvider,
+  FacebookLoginProvider,
+} from "angular5-social-login";
+import { getAuthServiceConfigs } from "./socialloginConfig";
 
+
+import { AppComponent } from './app.component';
+import { LoginBarComponent } from './login-bar/login-bar.component';
+import { RoutingModule } from './/routing.module';
+
+import { LoginServices  } from './services/login.services';
+import { HttpInterceptor } from './services/http-interceptor.services';
+import { Configuration } from './app.constants';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardVendedorComponent,
-    LoginBarComponent,
-    TopNavBarComponent,
-    ProductListComponent,
+    LoginBarComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-
-    HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
-    )
+    SocialLoginModule,
+    HttpModule,
+    RoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: AuthServiceConfig,
+      useFactory: getAuthServiceConfigs
+    },
+    LoginServices,
+    HttpInterceptor,
+    Configuration
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

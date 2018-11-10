@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../modelos/Usuario';
-import { Router } from '@angular/router';
-import { LoginService } from '../services/login.services';
-
+import { LoginServices } from './../services/login.services';
+import { AuthService, GoogleLoginProvider } from "angular5-social-login";
+import { TokenModel } from './../models/token.model';
 
 
 @Component({
@@ -12,40 +11,31 @@ import { LoginService } from '../services/login.services';
 })
 export class LoginBarComponent implements OnInit {
 
-  user: Usuario = {
-    id: null,
-    email: null,
-    password: null
-  };
+  message: string = null;
 
-  constructor(
-    private router: Router,
-    private loginService: LoginService
-  ) { }
+  constructor(private loginServices : LoginServices, private socialAuthService: AuthService) { }
 
   ngOnInit() {
   }
 
-  public comprobarUsuario(): void {
-    if (this.user.email != null && this.user.email != '') {
-      if (this.user.password != null && this.user.password != '') {
-        this.loginService.getUser(this.user.email).subscribe(data => {
-          let res: Usuario;
-          if(data != null){
-            res = data;
-            if(this.user.password == data.password){
-              this.user = data;
-              this.router.navigateByUrl('/dashboard-ventas');
-            }
-            else
-              console.log('incorrect password');
-          } else{
-            console.log('not found');
-          }
-        });
-      } else
-        console.log('Contraseña vacia');
-    } else
-      console.log('Usuario vacio');
+  onSignIn() {
+    let socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
+
+  this.socialAuthService.signIn(socialPlatformProvider).then(
+      (userData) => { //on success
+        //this will return user data from google. What you need is a user token which you will send it to the server
+        let token = userData.idToken;
+        this.googleLogin(token);
+      }
+    );
+  }
+
+  googleLogin(token : string){
+    
+    this.loginServices.googleLogin(token).subscribe(data =>{
+      console.log('Respuesta server: ', data);
+    }, err=>{
+      console.log('Error en el servicio de autenticacion');
+    });
   }
 }

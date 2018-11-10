@@ -1,37 +1,29 @@
-<nav id="sidebar">
-  <div class="sidebar-header">
-    <h3>Almacenero</h3>
-  </div>
 
-  <div>
-    <form class="px-4 py-3">
-      <div class="form-group">
-        <label for="exampleDropdownFormEmail1">Correo electronico</label>
-        <input [(ngModel)]="user.email" type="email" class="form-control" name="exampleDropdownFormEmail1"
-          placeholder="email@example.com">
-      </div>
-      <div class="form-group">
-        <label for="exampleDropdownFormPassword1">Contraseña</label>
-        <input [(ngModel)]="user.password" type="password" class="form-control" name="exampleDropdownFormPassword1"
-          placeholder="Password">
-      </div>
-      <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="dropdownCheck">
-        <label class="form-check-label" for="dropdownCheck">
-          Recordarme
-        </label>
-      </div>
-      <button (click)="comprobarUsuario()" type="button" class="btn btn-primary">Iniciar Sesión</button>
-    </form>
-    <div class="dropdown-divider"></div>
-    <div class="container">
-      <div class="row item">
-          <a href="#">Nuevo por aquí? Registrarse</a>
-      </div>
-      <div class="row item">
-          <a href="#">Olvido su contraseña?</a>
-      </div>
+  <div class="sidebar"><h1>Nksoft ventas</h1></div>
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <h2 class="active"> Sign In </h2>
+    <h2 class="inactive underlineHover">Sign Up </h2>
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="../../assets/img/sign-in-alt-solid.svg" id="icon" alt="User Icon" />
     </div>
-  </div>
 
-</nav>
+    <!-- Login Form -->
+    <form>
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+      <div class="tooltip">
+        <button (click)="onSignIn()" type="button" class="fadeIn fourth"><img src="../../assets/img/google-brands.svg" id="icon-button"> Sing-in</button>
+        <span class="tooltiptext">Inicio de sesión con Google</span>
+      </div>
+    </form>
+    
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
+
+  </div>
